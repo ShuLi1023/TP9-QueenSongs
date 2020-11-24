@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import DisplayList from './DisplayList';
+import SongList from './SongList'
+import {allSongs} from './songs'
 
-function App() {
-  return (
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      songsList: allSongs,
+      selectedSongs: [],
+    }
+  }
+
+  onDisplaySongs = (songs) => {
+    if(songs.length !== 0) {
+        this.setState({
+          selectedSongs: [...this.state.selectedSongs, songs]
+          
+        })
+    }
+  }
+
+  onRemoveSong = (removeSong) => {
+    const newList = this.state.selectedSongs.filter((s) => s !== removeSong)
+    this.setState({selectedSongs: newList})
+  }
+  
+  render() {
+    console.log(this.state.selectedSongs)
+    console.log(this.state.songsList)
+    return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h1>Queen Songs</h1>
+        <SongList songsList={this.state.songsList} onDisplaySongs={this.onDisplaySongs}/>
+        <DisplayList selectedSongs={this.state.selectedSongs} onRemoveSong={this.onRemoveSong}/>
+        
+      </div>
     </div>
-  );
+    )
+  }
 }
 
 export default App;
