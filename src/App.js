@@ -1,8 +1,8 @@
 import React from 'react'
 import './App.css';
 import DisplayList from './DisplayList';
-import SongList from './SongList'
 import {allSongs} from './songs'
+import SearchSong from "./SearchSong"
 
 class App extends React.Component{
   constructor(props){
@@ -13,11 +13,10 @@ class App extends React.Component{
     }
   }
 
-  onDisplaySongs = (songs) => {
-    if(songs.length !== 0) {
+  onSelectSong = (song) => {
+    if(song.length !== 0 && this.state.selectedSongs.indexOf(song) === -1) {
         this.setState({
-          selectedSongs: [...this.state.selectedSongs, songs]
-          
+          selectedSongs: [...this.state.selectedSongs, song]
         })
     }
   }
@@ -26,6 +25,10 @@ class App extends React.Component{
     const newList = this.state.selectedSongs.filter((s) => s !== removeSong)
     this.setState({selectedSongs: newList})
   }
+
+  onClick = () => {
+    alert('Selected songs:  ' + this.state.selectedSongs)
+  }
   
   render() {
     console.log(this.state.selectedSongs)
@@ -33,10 +36,12 @@ class App extends React.Component{
     return(
     <div className="App">
       <div>
-        <h1>Queen Songs</h1>
-        <SongList songsList={this.state.songsList} onDisplaySongs={this.onDisplaySongs}/>
+      <img src='./images/logo.png' alt='logo'></img>
+      </div>
+      <div>
+        <SearchSong songsList={this.state.songsList} onSelectSong={this.onSelectSong}/>
         <DisplayList selectedSongs={this.state.selectedSongs} onRemoveSong={this.onRemoveSong}/>
-        
+        <button className="valid-button" onClick={this.onClick}>Validate</button>
       </div>
     </div>
     )
