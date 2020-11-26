@@ -43,10 +43,11 @@ class SearchSong extends React.Component {
     const { activeSong, filteredSongs } = this.state;
 
     if (e.keyCode === 13) {
+      this.props.onSelectSong(filteredSongs[activeSong])
       this.setState({
         activeSong: 0,
         showSongs: false,
-        userInput: filteredSongs[activeSong]
+        userInput: ''
       });
     }
 

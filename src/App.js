@@ -31,8 +31,6 @@ class App extends React.Component{
   }
   
   render() {
-    console.log(this.state.selectedSongs)
-    console.log(this.state.songsList)
     return(
     <div className="App">
       <div>
