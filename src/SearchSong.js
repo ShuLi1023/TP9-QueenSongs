@@ -60,11 +60,11 @@ class SearchSong extends React.Component {
 
       case 'ArrowDown' :
         this.setState({ showSongs : true });
-        if (activeSong + 1 === filteredSongs.length) {
+        if (activeSong + 1 === autocompleteSongsList.length) {
           return;
         }
         this.setState({ activeSong: activeSong + 1 });
-        if(activeSong > 1 && filteredSongs.length > 4){
+        if(activeSong > 1 && autocompleteSongsList.length > 4){
         this.onScroll()
       }
       break;

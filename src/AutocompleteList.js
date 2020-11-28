@@ -24,7 +24,7 @@ export default class AutocompleteList extends React.Component{
 
       return (this.props.showSongs  )  ?
         <ul className="options">
-          { this.props.filteredSongs.map((song, index) => {
+          { this.props.autocompleteSongsList.map((song, index) => {
             let className = "",id = ""
             
             if(this.props.selectedSongs.includes(song)){

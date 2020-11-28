@@ -34,7 +34,8 @@ input[type=text] {
   list-style: none;
   margin-top: 0;
   max-height: 143px;
-  overflow-y: auto;
+  overflow:hidden; 
+  overflow-y:scroll;  
   padding-left: 0;
   width: calc(300px + 1rem);
 }
