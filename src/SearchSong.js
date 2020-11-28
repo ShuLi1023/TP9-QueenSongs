@@ -7,7 +7,7 @@ class SearchSong extends React.Component {
     super(props);
     this.state = {
       activeSong: 0,
-      filteredSongs: this.props.songsList,
+      autocompleteSongsList: this.props.songsList,
       showSongs: false,
       userInput: ""
     }
@@ -23,33 +23,11 @@ class SearchSong extends React.Component {
     }
 
     this.setState({
-        filteredSongs: this.props.songsList,
+        autocompleteSongsList: this.props.songsList,
         showSongs: false,
         userInput: "",
         activeSong: 0
     })
-  }
-
-  onSongUnselected = (song) => {
-    this.setState({
-        filteredSongs: this.props.songsList,
-        showSongs: false,
-        userInput: "",
-        activeSong: 0
-      })
-
-    this.props.onRemoveSong(song)
-  }
-
-  onSongSelected = (song) => {
-      this.setState({
-        filteredSongs: this.props.songsList,
-        showSongs: false,
-        userInput: "",
-        activeSong: 0
-      })
-
-    this.props.onSelectSong(song)
   }
 
   onChange = e => {
@@ -59,17 +37,17 @@ class SearchSong extends React.Component {
     console.log()
     this.setState({
       activeSong: 0,
-      filteredSongs: songSuggestions,
+      autocompleteSongsList: songSuggestions,
       showSongs: true,
       userInput: e.target.value
     })
   };
 
   onKeyDown = e => {
-    const {filteredSongs, activeSong} = this.state
+    const {autocompleteSongsList, activeSong} = this.state
     switch(e.key){
       case 'Enter':
-        this.onSongSelected(filteredSongs[activeSong])
+        this.toggleSongSelected(autocompleteSongsList[activeSong])
       break
 
       case 'ArrowUp':
@@ -116,7 +94,7 @@ class SearchSong extends React.Component {
               value={this.state.userInput}
               placeholder='Search songs'
             />
-            <AutocompleteList activeSong={this.state.activeSong} filteredSongs={this.state.filteredSongs} userInput={this.state.userInput} onSongUnselected = {this.onSongUnselected}
+            <AutocompleteList activeSong={this.state.activeSong} autocompleteSongsList={this.state.autocompleteSongsList} userInput={this.state.userInput}
               showSongs={this.state.showSongs} selectedSongs = {this.props.selectedSongs}  toggleSongSelected = {this.toggleSongSelected} />
         </div>
         
