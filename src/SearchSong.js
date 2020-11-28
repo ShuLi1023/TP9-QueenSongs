@@ -34,7 +34,6 @@ class SearchSong extends React.Component {
 
     const { songsList } = this.props;
     const songSuggestions = songsList.filter( song => song.toLowerCase().includes(e.target.value.toLowerCase()) )
-    console.log()
     this.setState({
       activeSong: 0,
       autocompleteSongsList: songSuggestions,
@@ -55,7 +54,11 @@ class SearchSong extends React.Component {
         if (activeSong === 0) {
           return;
         }
+        console.log(this.state.activeSong)
         this.setState({ activeSong: activeSong - 1 });
+        if(activeSong > 1 && autocompleteSongsList.length > 4){
+            this.onScroll(false)
+        }
       break
 
       case 'ArrowDown' :
@@ -65,8 +68,8 @@ class SearchSong extends React.Component {
         }
         this.setState({ activeSong: activeSong + 1 });
         if(activeSong > 1 && autocompleteSongsList.length > 4){
-        this.onScroll()
-      }
+          this.onScroll(true)
+        }
       break;
 
       case 'Escape' :
@@ -77,9 +80,9 @@ class SearchSong extends React.Component {
 
     }
   }
-  onScroll = () => {
+  onScroll = (Boolean) => {
     const elmnt = document.getElementById("active")
-    elmnt.scrollIntoView()
+    elmnt.scrollIntoView(Boolean)
   }
 
   render() {
