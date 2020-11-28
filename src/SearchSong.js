@@ -7,7 +7,7 @@ class SearchSong extends React.Component {
     super(props);
     this.state = {
       activeSong: 0,
-      filteredSongs: [],
+      filteredSongs: this.props.songsList,
       showSongs: false,
       userInput: ""
     }
@@ -15,7 +15,7 @@ class SearchSong extends React.Component {
 
   onSongUnselected = (song) => {
     this.setState({
-        filteredSongs: [],
+        filteredSongs: this.props.songsList,
         showSongs: false,
         userInput: "",
         activeSong: 0
@@ -26,7 +26,7 @@ class SearchSong extends React.Component {
 
   onSongSelected = (song) => {
       this.setState({
-        filteredSongs: [],
+        filteredSongs: this.props.songsList,
         showSongs: false,
         userInput: "",
         activeSong: 0
@@ -38,7 +38,7 @@ class SearchSong extends React.Component {
   onChange = e => {
 
     const { songsList } = this.props;
-    const songSuggestions = songsList.filter( song => song.includes(e.target.value))
+    const songSuggestions = songsList.filter( song => song.toLowerCase().indexOf(this.state.userInput.toLowerCase()) > -1)
  
     this.setState({
       activeSong: 0,
@@ -50,25 +50,33 @@ class SearchSong extends React.Component {
 
   onKeyDown = e => {
     const {filteredSongs, activeSong} = this.state
-    
-    if (e.key === 'Enter') {
-      this.onSongSelected(filteredSongs[activeSong])
-    }
+    switch(e.key){
+      case 'Enter':
+        this.onSongSelected(filteredSongs[activeSong])
+      break
 
-    else if (e.key === 'ArrowUp') {
-      if (activeSong === 0) {
-        return;
-      }
+      case 'ArrowUp':
+        this.setState({ showSongs : true });
+        if (activeSong === 0) {
+          return;
+        }
+        this.setState({ activeSong: activeSong - 1 });
+      break
 
-      this.setState({ activeSong: activeSong - 1 });
-    }
+      case 'ArrowDown' :
+        this.setState({ showSongs : true });
+        if (activeSong - 1 === filteredSongs.length) {
+          return;
+        }
+        this.setState({ activeSong: activeSong + 1 });
+      break;
 
-    else if (e.key === 'ArrowDown') {
-      if (activeSong - 1 === filteredSongs.length) {
-        return;
-      }
+      case 'Escape' :
+        this.setState({showSongs: false})
+        break;
 
-      this.setState({ activeSong: activeSong + 1 });
+      default:
+
     }
   }
 

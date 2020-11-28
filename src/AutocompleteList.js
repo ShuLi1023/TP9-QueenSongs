@@ -10,44 +10,41 @@ export default class AutocompleteList extends React.Component{
       if(this.props.selectedSongs.includes(e.target.innerText)){
         this.props.onSongUnselected(e.target.innerText)
       }else{
-        this.props.onSongSelected(e.target.innerText);
+        this.props.onSongSelected(e.target.innerText) 
       }
     }
 
     render(){
-      let songsListComponent = null
-      console.log("Rendering songs list " + this.props.showSongs)
-      if (this.props.showSongs && this.props.userInput) {
-        if (this.props.filteredSongs.length) {
-          songsListComponent = ( 
-            <ul className="options">
-              { this.props.filteredSongs.map((song, index) => {
-                let className = ""
-                
-                if(this.props.selectedSongs.includes(song)){
-                  console.log(song + "is selected")
-                  className += "option-selected "
-                }
-
-                if (index === this.props.activeSong) {
-                  className += "option-active";
-                }
-                return (
-                  <li className={className} key={index} onClick={this.onClick}>
-                    { song }
-                  </li>
-                );
-              })}
-            </ul>
-          );
-        } else {
-          songsListComponent = (
-            <div className="no-options">
-              <em>Can not find! </em>
-            </div>
-          );
+      
+        if(this.props.userInput.length === 0 && !this.props.showSongs){
+          console.log("False!")
+          return null
         }
-      }
-    return songsListComponent
+
+
+      return (this.props.showSongs)  ?
+        <div className="options">
+          { this.props.filteredSongs.map((song, index) => {
+            let className = ""
+            
+            if(this.props.selectedSongs.includes(song)){
+              console.log(song + "is selected")
+              className += "option-selected "
+            }
+
+            if (index === this.props.activeSong) {
+              className += "option-active" 
+            }
+            return (
+              <Song className={className} key={index} onClick={this.onClick} song={ song }/>
+            ) 
+          })}
+        </div>
+        :
+        <ul>
+          {console.log("Empty " + this.props.userInput + " | " + this.props.showSongs)}
+          <li>No song with that name</li>
+        </ul>
     }
+    
 }

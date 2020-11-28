@@ -46,7 +46,7 @@ input[type=text] {
 
 .option-active,
 .options li:hover {
-  background-color: #444645;
+  background-color: #444645 !important;
   color: #f6fbfc;
   cursor: pointer;
   font-weight: 700;
@@ -57,7 +57,7 @@ input[type=text] {
   color: #f6fbfc;
   cursor: pointer;
   font-weight: 700;
-  
+
 }
 
 .options li:not(:last-of-type) {
