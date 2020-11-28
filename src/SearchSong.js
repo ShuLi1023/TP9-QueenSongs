@@ -5,7 +5,7 @@ class SearchSong extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSong: 0,
+      activeSong: -1,
       filteredSongs: [],
       showSongs: false,
       userInput: ""
@@ -73,15 +73,19 @@ class SearchSong extends React.Component {
 
     if (this.state.showSongs && this.state.userInput) {
       if (this.state.filteredSongs.length) {
-        songsListComponent = (
-          <ul class="options">
+        songsListComponent = ( 
+          <ul className="options">
             { this.state.filteredSongs.map((song, index) => {
-              let className;
-
-              if (index === this.state.activeSong) {
-                className = "option-active";
+              let className = ""
+              
+              if(this.props.selectedSongs.includes(song)){
+                console.log(song + "is selected")
+                className += "option-selected "
               }
 
+              if (index === this.state.activeSong) {
+                className += "option-active";
+              }
               return (
                 <li className={className} key={song} onClick={this.onClick}>
                   { song }
@@ -92,7 +96,7 @@ class SearchSong extends React.Component {
         );
       } else {
         songsListComponent = (
-          <div class="no-options">
+          <div className="no-options">
             <em>Can not find! </em>
           </div>
         );

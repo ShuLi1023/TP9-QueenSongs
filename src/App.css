@@ -52,6 +52,14 @@ input[type=text] {
   font-weight: 700;
 }
 
+.option-selected{
+  background-color: lightgreen;
+  color: #f6fbfc;
+  cursor: pointer;
+  font-weight: 700;
+  
+}
+
 .options li:not(:last-of-type) {
   border-bottom: 1px solid #999;
 }
