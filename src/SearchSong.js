@@ -13,6 +13,23 @@ class SearchSong extends React.Component {
     }
   }
 
+
+  toggleSongSelected = (song) => {
+
+    if(this.props.selectedSongs.includes(song)){
+        this.props.onRemoveSong(song)
+    }else{
+        this.props.onSelectSong(song) 
+    }
+
+    this.setState({
+        filteredSongs: this.props.songsList,
+        showSongs: false,
+        userInput: "",
+        activeSong: 0
+    })
+  }
+
   onSongUnselected = (song) => {
     this.setState({
         filteredSongs: this.props.songsList,
@@ -38,8 +55,8 @@ class SearchSong extends React.Component {
   onChange = e => {
 
     const { songsList } = this.props;
-    const songSuggestions = songsList.filter( song => song.toLowerCase().indexOf(this.state.userInput.toLowerCase()) > -1)
- 
+    const songSuggestions = songsList.filter( song => song.toLowerCase().includes(e.target.value.toLowerCase()) )
+    console.log()
     this.setState({
       activeSong: 0,
       filteredSongs: songSuggestions,
@@ -99,9 +116,10 @@ class SearchSong extends React.Component {
               value={this.state.userInput}
               placeholder='Search songs'
             />
+            <AutocompleteList activeSong={this.state.activeSong} filteredSongs={this.state.filteredSongs} userInput={this.state.userInput} onSongUnselected = {this.onSongUnselected}
+              showSongs={this.state.showSongs} selectedSongs = {this.props.selectedSongs}  toggleSongSelected = {this.toggleSongSelected} />
         </div>
-        <AutocompleteList activeSong={this.state.activeSong} filteredSongs={this.state.filteredSongs} userInput={this.state.userInput} onSongUnselected = {this.onSongUnselected}
-          showSongs={this.state.showSongs} selectedSongs = {this.props.selectedSongs}  onSongSelected = {this.onSongSelected} />
+        
       </React.Fragment>
     )
   }
