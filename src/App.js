@@ -30,7 +30,11 @@ class App extends React.Component{
   }
 
   onClick = () => {
-    alert('Selected songs:  ' + this.state.selectedSongs)
+    if(this.state.selectedSongs.length === 0){
+      alert("No Songs Selected!")
+    }else{
+      alert("Selected songs: " + this.state.selectedSongs)
+    }
   }
   
   render() {
