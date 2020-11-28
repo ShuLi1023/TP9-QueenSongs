@@ -22,7 +22,6 @@ class App extends React.Component{
   }
 
   onRemoveSong = (removeSong) => {
-    console.log("Removed Song " + removeSong)
     const newList = this.state.selectedSongs.filter((s) => s !== removeSong)
     this.setState({
       selectedSongs: newList

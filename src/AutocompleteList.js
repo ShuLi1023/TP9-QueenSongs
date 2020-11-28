@@ -5,7 +5,6 @@ export default class AutocompleteList extends React.Component{
 
 
     onClick = e => {
-      console.log("Clicked! " + e.target.innerText)
 
       if(this.props.selectedSongs.includes(e.target.innerText)){
         this.props.toggleSongSelected(e.target.innerText)
@@ -17,7 +16,6 @@ export default class AutocompleteList extends React.Component{
     render(){
       
         if(this.props.userInput.length === 0 && !this.props.showSongs){
-          console.log("False!")
           return null
         }
 
@@ -28,7 +26,6 @@ export default class AutocompleteList extends React.Component{
             let className = "",id = ""
             
             if(this.props.selectedSongs.includes(song)){
-              console.log(song + "is selected")
               className += "option-selected "
             }
 
@@ -43,7 +40,6 @@ export default class AutocompleteList extends React.Component{
         </ul>
         :
         <ul>
-          {console.log("Empty " + this.props.userInput + " | " + this.props.showSongs)}
           <li>No song with that name</li>
         </ul>
     }
