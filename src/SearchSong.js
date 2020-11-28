@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import AutocompleteList from "./AutocompleteList"
 
 class SearchSong extends React.Component {
   
@@ -6,108 +7,87 @@ class SearchSong extends React.Component {
     super(props);
     this.state = {
       activeSong: 0,
-      filteredSongs: [],
+      filteredSongs: this.props.songsList,
       showSongs: false,
       userInput: ""
-    };
+    }
+  }
+
+  onSongUnselected = (song) => {
+    this.setState({
+        filteredSongs: this.props.songsList,
+        showSongs: false,
+        userInput: "",
+        activeSong: 0
+      })
+
+    this.props.onRemoveSong(song)
+  }
+
+  onSongSelected = (song) => {
+      this.setState({
+        filteredSongs: this.props.songsList,
+        showSongs: false,
+        userInput: "",
+        activeSong: 0
+      })
+
+    this.props.onSelectSong(song)
   }
 
   onChange = e => {
+
     const { songsList } = this.props;
-    const filteredSongs = songsList.filter( song => song.includes(e.target.value))
+    const songSuggestions = songsList.filter( song => song.toLowerCase().indexOf(this.state.userInput.toLowerCase()) > -1)
  
     this.setState({
       activeSong: 0,
-      filteredSongs,
+      filteredSongs: songSuggestions,
       showSongs: true,
       userInput: e.target.value
-    });
-  };
-
-  onClick = e => {
-    this.props.onSelectSong(e.target.innerText);
-    this.setState({
-      activeSong: 0,
-      filteredSongs: [],
-      showSongs: false,
-      userInput: ''
-    });
+    })
   };
 
   onKeyDown = e => {
-    const { activeSong, filteredSongs } = this.state;
-    
-    if (e.key === 'Enter') {
-      this.props.onSelectSong(filteredSongs[activeSong])
-      this.setState({
-        activeSong: 0,
-        showSongs: false,
-        userInput: ''
-      });
-    }
+    const {filteredSongs, activeSong} = this.state
+    switch(e.key){
+      case 'Enter':
+        this.onSongSelected(filteredSongs[activeSong])
+      break
 
-    else if (e.key === 'ArrowUp') {
-      if (activeSong === 0) {
-        return;
-      }
-      
-      this.setState({ activeSong: activeSong - 1 });
-      if(filteredSongs.length > 4){
+      case 'ArrowUp':
+        this.setState({ showSongs : true });
+        if (activeSong === 0) {
+          return;
+        }
+        this.setState({ activeSong: activeSong - 1 });
+      break
+
+      case 'ArrowDown' :
+        this.setState({ showSongs : true });
+        if (activeSong + 1 === filteredSongs.length) {
+          return;
+        }
+        this.setState({ activeSong: activeSong + 1 });
+        if(activeSong > 1 && filteredSongs.length > 4){
         this.onScroll()
       }
+      break;
+
+      case 'Escape' :
+        this.setState({showSongs: false})
+        break;
+
+      default:
 
     }
-
-    else if (e.key === 'ArrowDown') {
-      console.log(activeSong)
-      if (activeSong + 1 === filteredSongs.length) {
-        return;
-      }
-
-      this.setState({ activeSong: activeSong + 1 });
-      if(activeSong > 1 && filteredSongs.length > 4){
-        this.onScroll()
-      }
-      
-    }
-  };
-
+  }
   onScroll = () => {
     const elmnt = document.getElementById("active")
     elmnt.scrollIntoView()
   }
 
   render() {
-    let songsListComponent;
-
-    if (this.state.showSongs && this.state.userInput) {
-      if (this.state.filteredSongs.length) {
-        songsListComponent = (
-          <ul class="options">
-            { this.state.filteredSongs.map((song, index) => {
-              let className, id;
-
-              if (index === this.state.activeSong) {
-                className = "option-active"
-                id = "active"
-              }
-
-              return (
-                <li className={className} key={index} onClick={this.onClick} id={id}>
-                  { song }
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        songsListComponent = (
-          <div class="no-options">
-            <em>Can not find! </em>
-          </div>
-        );
-      }
-    }
 
     return (
       <React.Fragment>
@@ -120,9 +100,10 @@ class SearchSong extends React.Component {
               placeholder='Search songs'
             />
         </div>
-        {songsListComponent}
+        <AutocompleteList activeSong={this.state.activeSong} filteredSongs={this.state.filteredSongs} userInput={this.state.userInput} onSongUnselected = {this.onSongUnselected}
+          showSongs={this.state.showSongs} selectedSongs = {this.props.selectedSongs}  onSongSelected = {this.onSongSelected} />
       </React.Fragment>
-    );
+    )
   }
 }
 

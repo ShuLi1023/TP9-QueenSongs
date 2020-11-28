@@ -7,11 +7,11 @@ class DisplayList extends React.Component{
             <h2>No song selected</h2>
         ) : (
             <ul className='display'>
-               {this.props.selectedSongs.map((song, index) => (
-                   <li key={index} >
-                    <span>{song}</span>
-                    <button className='del-button' onClick={() => this.props.onRemoveSong(song)}></button>
-                   </li>
+                {this.props.selectedSongs.map((song, index) => (
+                    <li key={index} >
+                        <span>{song}</span>
+                        <button className='del-button' onClick={() => this.props.onRemoveSong(song)}></button>
+                    </li>
                ))}
             </ul>
         )
