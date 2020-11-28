@@ -50,18 +50,32 @@ class SearchSong extends React.Component {
       if (activeSong === 0) {
         return;
       }
-
+      
       this.setState({ activeSong: activeSong - 1 });
+      if(filteredSongs.length > 4){
+        this.onScroll()
+      }
+
     }
 
     else if (e.key === 'ArrowDown') {
-      if (activeSong - 1 === filteredSongs.length) {
+      console.log(activeSong)
+      if (activeSong + 1 === filteredSongs.length) {
         return;
       }
 
       this.setState({ activeSong: activeSong + 1 });
+      if(activeSong > 1 && filteredSongs.length > 4){
+        this.onScroll()
+      }
+      
     }
   };
+
+  onScroll = () => {
+    const elmnt = document.getElementById("active")
+    elmnt.scrollIntoView()
+  }
 
   render() {
     let songsListComponent;
@@ -71,14 +85,15 @@ class SearchSong extends React.Component {
         songsListComponent = (
           <ul class="options">
             { this.state.filteredSongs.map((song, index) => {
-              let className;
+              let className, id;
 
               if (index === this.state.activeSong) {
-                className = "option-active";
+                className = "option-active"
+                id = "active"
               }
 
               return (
-                <li className={className} key={index} onClick={this.onClick}>
+                <li className={className} key={index} onClick={this.onClick} id={id}>
                   { song }
                 </li>
               );
