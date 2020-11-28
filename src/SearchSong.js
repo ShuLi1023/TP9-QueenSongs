@@ -14,23 +14,18 @@ class SearchSong extends React.Component {
 
   onChange = e => {
     const { songsList } = this.props;
-    const userInput = e.currentTarget.value;
-
-    const filteredSongs = songsList.filter(
-      song =>
-      song.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-    );
-
+    const filteredSongs = songsList.filter( song => song.includes(e.target.value))
+ 
     this.setState({
       activeSong: 0,
       filteredSongs,
       showSongs: true,
-      userInput: e.currentTarget.value
+      userInput: e.target.value
     });
   };
 
   onClick = e => {
-    this.props.onSelectSong(e.currentTarget.innerText);
+    this.props.onSelectSong(e.target.innerText);
     this.setState({
       activeSong: 0,
       filteredSongs: [],
@@ -41,8 +36,8 @@ class SearchSong extends React.Component {
 
   onKeyDown = e => {
     const { activeSong, filteredSongs } = this.state;
-
-    if (e.keyCode === 13) {
+    
+    if (e.key === 'Enter') {
       this.props.onSelectSong(filteredSongs[activeSong])
       this.setState({
         activeSong: 0,
@@ -51,7 +46,7 @@ class SearchSong extends React.Component {
       });
     }
 
-    else if (e.keyCode === 38) {
+    else if (e.key === 'ArrowUp') {
       if (activeSong === 0) {
         return;
       }
@@ -59,7 +54,7 @@ class SearchSong extends React.Component {
       this.setState({ activeSong: activeSong - 1 });
     }
 
-    else if (e.keyCode === 40) {
+    else if (e.key === 'ArrowDown') {
       if (activeSong - 1 === filteredSongs.length) {
         return;
       }
@@ -87,7 +82,7 @@ class SearchSong extends React.Component {
                 className += "option-active";
               }
               return (
-                <li className={className} key={song} onClick={this.onClick}>
+                <li className={className} key={index} onClick={this.onClick}>
                   { song }
                 </li>
               );
