@@ -54,7 +54,7 @@ input[type=text] {
 }
 
 .option-selected{
-  background-color: lightgreen;
+  background-color: rgb(6, 110, 37);
   color: #f6fbfc;
   cursor: pointer;
   font-weight: 700;
@@ -80,7 +80,7 @@ input[type=text] {
 }
 
 .valid-button {
-  background-color: #555555; /* Green */
+  background-color: #066e25; 
   border: none;
   color: white;
   padding: 15px 32px;
@@ -88,4 +88,10 @@ input[type=text] {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius: 15px;
+}
+
+.valid-button:hover{
+  background-color: rgba(6, 110, 37, 0.8);
+  padding: 17px 35px; 
 }

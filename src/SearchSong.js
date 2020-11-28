@@ -73,16 +73,16 @@ class SearchSong extends React.Component {
       break;
 
       case 'Escape' :
-        this.setState({showSongs: false})
+        this.setState({showSongs: false, activeSong: 0})
         break;
 
       default:
 
     }
   }
-  onScroll = (Boolean) => {
+  onScroll = (scroll) => {
     const elmnt = document.getElementById("active")
-    elmnt.scrollIntoView(Boolean)
+    if(elmnt !== null){  elmnt.scrollIntoView(scroll) }
   }
 
   render() {
