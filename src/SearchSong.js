@@ -40,6 +40,8 @@ class SearchSong extends React.Component {
       showSongs: true,
       userInput: e.target.value
     })
+    if(songSuggestions.length === 0){ this.setState({showSongs: false}) }
+
   };
 
   onKeyDown = e => {
@@ -54,7 +56,6 @@ class SearchSong extends React.Component {
         if (activeSong === 0) {
           return;
         }
-        console.log(this.state.activeSong)
         this.setState({ activeSong: activeSong - 1 });
         if(activeSong > 1 && autocompleteSongsList.length > 4){
             this.onScroll(false)

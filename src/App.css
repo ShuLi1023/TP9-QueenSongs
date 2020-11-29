@@ -69,6 +69,12 @@ input[type=text] {
   padding: 0.5rem;
 }
 
+li{
+  list-style: none;
+  color: rgb(172, 7, 7);
+  font-size: 18px;
+}
+
 .del-button{
   width: 20px;
   height: 20px;
