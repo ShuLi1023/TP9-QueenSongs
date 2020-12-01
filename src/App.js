@@ -5,8 +5,8 @@ import {allSongs} from './songs'
 import SearchSong from "./SearchSong"
 
 class App extends React.Component{
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
     this.state = {
       songsList: allSongs,
       selectedSongs: []
@@ -28,7 +28,7 @@ class App extends React.Component{
     })
   }
 
-  onClick = () => {
+  validate = () => {
     if(this.state.selectedSongs.length === 0){
       alert("No Songs Selected!")
     }else{
@@ -46,7 +46,7 @@ class App extends React.Component{
         <SearchSong songsList = {this.state.songsList}  selectedSongs = {this.state.selectedSongs} onSelectSong = {this.onSelectSong} onRemoveSong={this.onRemoveSong} />
         <DisplayList selectedSongs={this.state.selectedSongs} onRemoveSong={this.onRemoveSong}/>
 
-        <button className="valid-button" onClick={this.onClick}>Validate</button>
+        <button className="valid-button" onClick={this.validate}>Validate</button>
       </div>
     </div>
     )

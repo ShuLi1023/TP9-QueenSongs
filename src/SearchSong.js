@@ -41,7 +41,6 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
         if (activeSong === 0) {
           return;
         }
-        console.log(this.state.activeSong)
         setActiveSong(activeSong - 1)
         if(activeSong > 1 && autocompleteSongsList.length > 4){
             onScroll(false)
@@ -61,6 +60,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
 
       case 'Escape' :
         setShowSongs(false)
+        setActiveSong(0)
         break;
 
       default:
@@ -69,7 +69,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
   }
   const onScroll = (Boolean) => {
     const elmnt = document.getElementById("active")
-    elmnt.scrollIntoView(Boolean)
+    if(elmnt !== null){  elmnt.scrollIntoView(Boolean) }
   }
 
   return (
