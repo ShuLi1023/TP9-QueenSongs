@@ -1,5 +1,6 @@
 import React from "react"
 import AutocompleteList from "./AutocompleteList"
+import PropTypes from 'prop-types'
 
 const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
   const [activeSong, setActiveSong] = React.useState(0)
@@ -88,6 +89,13 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
       
     </React.Fragment>
   )
+}
+
+SearchSong.PropTypes = {
+  selectedSongs: PropTypes.array.isRequired,
+  onRemoveSong: PropTypes.func.isRequired,
+  onSelectSong: PropTypes.func.isRequired,
+  songsList: PropTypes.array.isRequired,
 }
 
 export default SearchSong;

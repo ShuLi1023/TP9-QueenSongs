@@ -3,6 +3,7 @@ import './App.css';
 import DisplayList from './DisplaySelectedList';
 import {allSongs} from './songs'
 import SearchSong from "./SearchSong"
+import PropTypes from 'prop-types'
 
 class App extends React.Component{
   constructor(){
@@ -51,6 +52,11 @@ class App extends React.Component{
     </div>
     )
   }
+}
+
+App.ProtoTypes = {
+  songsList: PropTypes.array.isRequired,
+  selectedSongs: PropTypes.array.isRequired,
 }
 
 export default App;

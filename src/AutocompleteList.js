@@ -1,5 +1,6 @@
 import React from 'react'
 import Song from './Song'
+import PropTypes from 'prop-types'
 
 const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selectedSongs, activeSong, toggleSongSelected}) => {
 
@@ -36,6 +37,15 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
     <ul>
       <li>No song with that name</li>
     </ul>
+  }
+
+  AutocompleteList.propTypes = {
+    userInput: PropTypes.string.isRequired,
+    showSongs: PropTypes.bool.isRequired,
+    autocompleteSongsList: PropTypes.array.isRequired,
+    selectedSongs: PropTypes.array.isRequired,
+    activeSong: PropTypes.number.isRequired,
+    toggleSongSelected: PropTypes.func.isRequired,
   }
 
 export default AutocompleteList;

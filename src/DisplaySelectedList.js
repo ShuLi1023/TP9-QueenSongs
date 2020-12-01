@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const DisplayList = ({selectedSongs, onRemoveSong }) => {
     
@@ -14,6 +15,11 @@ const DisplayList = ({selectedSongs, onRemoveSong }) => {
                ))}
             </ul>
         )
+    }
+
+    DisplayList.propTypes = {
+        selectedSongs: PropTypes.array.isRequired,
+        onRemoveSong: PropTypes.func.isRequired,
     }
 
 export default DisplayList
