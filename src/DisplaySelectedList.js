@@ -1,21 +1,19 @@
 import React from 'react'
 
-class DisplayList extends React.Component{
+const DisplayList = ({selectedSongs, onRemoveSong }) => {
     
-    render() {
-        return this.props.selectedSongs.length === 0 ? (
+        return selectedSongs.length === 0 ? (
             <h2>No song selected</h2>
         ) : (
             <ul className='display'>
-                {this.props.selectedSongs.map((song, index) => (
+                {selectedSongs.map((song, index) => (
                     <li key={index} >
                         <span>{song}</span>
-                        <button className='del-button' onClick={() => this.props.onRemoveSong(song)}></button>
+                        <button className='del-button' onClick={() => onRemoveSong(song)}></button>
                     </li>
                ))}
             </ul>
         )
     }
-}
 
 export default DisplayList

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default class Songs extends React.Component{
+const Songs = ({className, onClick, id, song }) => {
  
-
-    render(){
-    return <li className = {this.props.className}  onClick={this.props.onClick} id={this.props.id}>{this.props.song} </li>
-    }
+    return <li className = {className}  onClick={onClick} id={id}>{song} </li>
+    
 }
+
+export default Songs

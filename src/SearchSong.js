@@ -1,109 +1,93 @@
 import React from "react"
 import AutocompleteList from "./AutocompleteList"
 
-class SearchSong extends React.Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeSong: 0,
-      autocompleteSongsList: this.props.songsList,
-      showSongs: false,
-      userInput: ""
-    }
-  }
+const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
+  const [activeSong, setActiveSong] = React.useState(0)
+  const [autocompleteSongsList, setAutocompleteSongsList] = React.useState(songsList)
+  const [showSongs, setShowSongs] = React.useState(false)
+  const [userInput, setUserInput] = React.useState("")
 
-
-  toggleSongSelected = (song) => {
-
-    if(this.props.selectedSongs.includes(song)){
-        this.props.onRemoveSong(song)
+  const toggleSongSelected = (song) => {
+    if(selectedSongs.includes(song)){
+        onRemoveSong(song)
     }else{
-        this.props.onSelectSong(song) 
+        onSelectSong(song) 
     }
 
-    this.setState({
-        autocompleteSongsList: this.props.songsList,
-        showSongs: false,
-        userInput: "",
-        activeSong: 0
-    })
+    setAutocompleteSongsList(songsList)
+    setShowSongs(false)
+    setUserInput("")
+    setActiveSong(0)
+    
   }
 
-  onChange = e => {
-
-    const { songsList } = this.props;
+  const onChange = e => {
     const songSuggestions = songsList.filter( song => song.toLowerCase().includes(e.target.value.toLowerCase()) )
-    this.setState({
-      activeSong: 0,
-      autocompleteSongsList: songSuggestions,
-      showSongs: true,
-      userInput: e.target.value
-    })
+    
+    setAutocompleteSongsList(songSuggestions)
+    setShowSongs(true)
+    setUserInput(e.target.value)
+    setActiveSong(0)
   };
 
-  onKeyDown = e => {
-    const {autocompleteSongsList, activeSong} = this.state
+  const onKeyDown = e => {
     switch(e.key){
       case 'Enter':
-        this.toggleSongSelected(autocompleteSongsList[activeSong])
+        toggleSongSelected(autocompleteSongsList[activeSong])
       break
 
       case 'ArrowUp':
-        this.setState({ showSongs : true });
+        setShowSongs(true)
         if (activeSong === 0) {
           return;
         }
         console.log(this.state.activeSong)
-        this.setState({ activeSong: activeSong - 1 });
+        setActiveSong(activeSong - 1)
         if(activeSong > 1 && autocompleteSongsList.length > 4){
-            this.onScroll(false)
+            onScroll(false)
         }
       break
 
       case 'ArrowDown' :
-        this.setState({ showSongs : true });
+        setShowSongs(true)
         if (activeSong + 1 === autocompleteSongsList.length) {
           return;
         }
-        this.setState({ activeSong: activeSong + 1 });
+        setActiveSong(activeSong + 1)
         if(activeSong > 1 && autocompleteSongsList.length > 4){
-          this.onScroll(true)
+          onScroll(true)
         }
       break;
 
       case 'Escape' :
-        this.setState({showSongs: false})
+        setShowSongs(false)
         break;
 
       default:
 
     }
   }
-  onScroll = (Boolean) => {
+  const onScroll = (Boolean) => {
     const elmnt = document.getElementById("active")
     elmnt.scrollIntoView(Boolean)
   }
 
-  render() {
-
-    return (
-      <React.Fragment>
-        <div className="autocomplete">
-            <input
-              type="text"
-              onChange={this.onChange}
-              onKeyDown={this.onKeyDown}
-              value={this.state.userInput}
-              placeholder='Search songs'
-            />
-            <AutocompleteList activeSong={this.state.activeSong} autocompleteSongsList={this.state.autocompleteSongsList} userInput={this.state.userInput}
-              showSongs={this.state.showSongs} selectedSongs = {this.props.selectedSongs}  toggleSongSelected = {this.toggleSongSelected} />
-        </div>
-        
-      </React.Fragment>
-    )
-  }
+  return (
+    <React.Fragment>
+      <div className="autocomplete">
+          <input
+            type="text"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={userInput}
+            placeholder='Search songs'
+          />
+          <AutocompleteList activeSong={activeSong} autocompleteSongsList={autocompleteSongsList} userInput={userInput}
+            showSongs={showSongs} selectedSongs = {selectedSongs}  toggleSongSelected = {toggleSongSelected} />
+      </div>
+      
+    </React.Fragment>
+  )
 }
 
 export default SearchSong;
