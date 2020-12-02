@@ -3,6 +3,7 @@ import AutocompleteList from "./AutocompleteList"
 import PropTypes from 'prop-types'
 
 const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
+  
   const [activeSong, setActiveSong] = React.useState(0)
   const [autocompleteSongsList, setAutocompleteSongsList] = React.useState(songsList)
   const [showSongs, setShowSongs] = React.useState(false)
@@ -26,9 +27,11 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
     const songSuggestions = songsList.filter( song => song.toLowerCase().includes(e.target.value.toLowerCase()) )
     
     setAutocompleteSongsList(songSuggestions)
-    setShowSongs(true)
     setUserInput(e.target.value)
     setActiveSong(0)
+    songSuggestions.length === 0 ?
+      setShowSongs(false) : 
+      setShowSongs(true)
   };
 
   const onKeyDown = e => {
@@ -74,7 +77,6 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
   }
 
   return (
-    <React.Fragment>
       <div className="autocomplete">
           <input
             type="text"
@@ -86,12 +88,10 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong, songsList}) => {
           <AutocompleteList activeSong={activeSong} autocompleteSongsList={autocompleteSongsList} userInput={userInput}
             showSongs={showSongs} selectedSongs = {selectedSongs}  toggleSongSelected = {toggleSongSelected} />
       </div>
-      
-    </React.Fragment>
   )
 }
 
-SearchSong.PropTypes = {
+SearchSong.propTypes = {
   selectedSongs: PropTypes.array.isRequired,
   onRemoveSong: PropTypes.func.isRequired,
   onSelectSong: PropTypes.func.isRequired,
