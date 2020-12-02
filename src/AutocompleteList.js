@@ -17,21 +17,23 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
   }
   return (showSongs  )  ?
     <ul className="options">
-      { autocompleteSongsList.map((song, index) => {
-        let className = "",id = ""
+      { 
+        autocompleteSongsList.map((song, index) => {
+          let className = "", id = ""
 
-        if(selectedSongs.includes(song)){
-          className += "option-selected "
-        }
+          if(selectedSongs.includes(song)){
+            className += "option-selected "
+          }
 
-        if (index === activeSong) {
-          className += "option-active"
-          id += "active" 
-        }
-        return (
-          <Song className={className} key={index} onClick={onClick} song={song} id={id}/>
-        ) 
-      })}
+          if (index === activeSong) {
+            className += "option-active"
+            id += "active" 
+          }
+          return (
+            <Song className={className} key={song} onClick={onClick} song={song} id={id}/>
+          ) 
+        })
+      }
     </ul>
     :
     <ul>
