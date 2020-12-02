@@ -5,53 +5,46 @@ import {allSongs} from './songs'
 import SearchSong from "./SearchSong"
 import PropTypes from 'prop-types'
 
-class App extends React.Component{
-  constructor(){
-    super()
-    this.state = {
-      songsList: allSongs,
-      selectedSongs: []
+const App = () => {
+
+  const songsList = allSongs
+  const [selectedSongs, setSelectedSongs] = React.useState([])
+
+
+  const onSelectSong = (song) => {
+    if(song !== "" && selectedSongs.indexOf(song) === -1) {
+      const selectedSongsList = [...selectedSongs, song]
+      setSelectedSongs(selectedSongsList)
     }
   }
 
-  onSelectSong = (song) => {
-    if(song !== "" && this.state.selectedSongs.indexOf(song) === -1) {
-        this.setState({
-          selectedSongs: [...this.state.selectedSongs, song]
-        })
-    }
+  const onRemoveSong = (removeSong) => {
+    const newList = selectedSongs.filter((s) => s !== removeSong)
+    setSelectedSongs(newList)
+
   }
 
-  onRemoveSong = (removeSong) => {
-    const newList = this.state.selectedSongs.filter((s) => s !== removeSong)
-    this.setState({
-      selectedSongs: newList
-    })
-  }
-
-  validate = () => {
-    if(this.state.selectedSongs.length === 0){
+  const validate = () => {
+    if(selectedSongs.length === 0){
       alert("No Songs Selected!")
     }else{
-      alert("Selected songs: " + this.state.selectedSongs)
+      alert("Selected songs: " + selectedSongs)
     }
   }
   
-  render() {
-    return(
+  return(
     <div className="App">
       <div>
       <img src='./images/logo.png' alt='logo'></img>
       </div>
       <div>
-        <SearchSong songsList = {this.state.songsList}  selectedSongs = {this.state.selectedSongs} onSelectSong = {this.onSelectSong} onRemoveSong={this.onRemoveSong} />
-        <DisplayList selectedSongs={this.state.selectedSongs} onRemoveSong={this.onRemoveSong}/>
+        <SearchSong songsList = {songsList}  selectedSongs = {selectedSongs} onSelectSong = {onSelectSong} onRemoveSong={onRemoveSong} />
+        <DisplayList selectedSongs={selectedSongs} onRemoveSong={onRemoveSong}/>
 
-        <button className="valid-button" onClick={this.validate}>Validate</button>
+        <button className="valid-button" onClick={validate}>Validate</button>
       </div>
     </div>
-    )
-  }
+  )
 }
 
 App.ProtoTypes = {
