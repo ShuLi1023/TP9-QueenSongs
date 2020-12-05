@@ -4,12 +4,23 @@ import DisplayList from './DisplaySelectedList';
 
 import SearchSong from "./SearchSong"
 import PropTypes from 'prop-types'
+import Axios from 'axios'
+
+
+async function isApiRunning(){
+  try{
+    await Axios.get(`http://localhost:8081/test`)
+  }catch(e){
+    alert("ERROR! API Not running!")
+  }
+}
+
 
 const App = () => {
 
+  isApiRunning()
+
   const [selectedSongs, setSelectedSongs] = React.useState([])
-
-
   const onSelectSong = (song) => {
     if(song !== "" && selectedSongs.indexOf(song) === -1) {
       const selectedSongsList = [...selectedSongs, song]
@@ -30,7 +41,7 @@ const App = () => {
       alert("Selected songs: " + selectedSongs)
     }
   }
-  
+
   return(
     <div className="App">
       <div>
