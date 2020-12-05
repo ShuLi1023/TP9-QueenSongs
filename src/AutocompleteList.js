@@ -12,7 +12,7 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
     }
   }
 
-  if(userInput.length === 0 && !showSongs){
+  if((userInput.trim().length === 0 && !showSongs) || autocompleteSongsList === null){
     return null
   }
   return (autocompleteSongsList.length === 0 )  ?
