@@ -104,4 +104,5 @@ li{
 .valid-button:hover{
   background-color: rgba(6, 110, 37, 0.8);
   padding: 17px 35px; 
+  cursor: pointer;
 }

@@ -8,7 +8,6 @@ const callApi = async (input) => {
   return response.data
 }
 
-
 const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
   
   const [activeSong, setActiveSong] = React.useState(0)
@@ -31,9 +30,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       setShouldCallApi(false)
       updateData()
     }
-
   }, [userInput, shouldCallApi])
-  
 
   const toggleSongSelected = (song) => {
     if(selectedSongs.includes(song)){
@@ -46,7 +43,6 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
     setShowSongs(false)
     setUserInput("")
     setActiveSong(0)
-    
   }
 
   const onChange = e => {    
@@ -60,12 +56,12 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
     }
     
     setActiveSong(0)
-    
   };
 
   const onKeyDown = e => {
     switch(e.key){
       case 'Enter':
+        if(autocompleteSongsList[activeSong])
         toggleSongSelected(autocompleteSongsList[activeSong])
       break
 
