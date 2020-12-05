@@ -81,8 +81,11 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       break
 
       case 'ArrowDown' :
-        setShowSongs(true)
-        if (activeSong + 1 === autocompleteSongsList.length) {
+        if(userInput !== ""){
+          setShowSongs(true)
+        }
+        console.log("input:" + userInput)
+        if(activeSong + 1 === autocompleteSongsList.length) {
           return;
         }
         setActiveSong(activeSong + 1)
