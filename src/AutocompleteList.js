@@ -11,7 +11,7 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
       toggleSongSelected(e.target.innerText) 
     }
   }
-
+  
   if((userInput.trim().length === 0 && !showSongs) || autocompleteSongsList === null){
     return null
   }

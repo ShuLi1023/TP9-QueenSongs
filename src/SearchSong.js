@@ -3,32 +3,16 @@ import AutocompleteList from "./AutocompleteList"
 import PropTypes from 'prop-types'
 import Axios from 'axios'
 
-const checkAPI = async () => {
-  try{
-    const response = await Axios.get(`http://localhost:8081/a`)
-    console.log(response.status)
-    return response.status
-  }catch(e){
-    console.log("ERROR: " + e)
-    return null
-  }  
-}
-
 const callApi = async (input) => {
-  const response = await Axios.get(`http://localhost:8081/${input}`)
-  return response.data
-}
-
-async function isApiRunning(){
-    const status = await checkAPI()
-    if(status !== 200){
-      alert("ERROR! API Not running!")
-    }
+  try{
+    const response = await Axios.get(`http://localhost:8081/${input}`)
+    return response.data
+  }catch(e){
+    return null
   }
+}
 
 const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
-  
-  isApiRunning()
 
   const [activeSong, setActiveSong] = React.useState(0)
   const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([])
@@ -39,12 +23,17 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
   useEffect(() => {
     async function updateData(){
         const songs = await callApi(userInput)
-        setAutocompleteSongsList(songs)
-        songs === 0 ?
-        setShowSongs(false) : 
-        setShowSongs(true)
-        
+        if(songs === null){
+          alert("ERROR! API Not running!")
+          setAutocompleteSongsList([])
+        }else{
+          setAutocompleteSongsList(songs)
+          songs === 0 ?
+          setShowSongs(false) : 
+          setShowSongs(true)
+        }
     }
+
 
     if(shouldCallApi && userInput !== ""){
       setShouldCallApi(false)
@@ -72,10 +61,9 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       setShouldCallApi(true)
     }else{
       setShowSongs(false)
-    }
-    
+    } 
     setActiveSong(0)
-  };
+  }
 
   const onKeyDown = e => {
     switch(e.key){
