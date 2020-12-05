@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react"
 import './App.css';
 import DisplayList from './DisplaySelectedList';
-import {allSongs} from './songs'
+
 import SearchSong from "./SearchSong"
 import PropTypes from 'prop-types'
 
 const App = () => {
 
-  const songsList = allSongs
   const [selectedSongs, setSelectedSongs] = React.useState([])
 
 
@@ -38,7 +37,7 @@ const App = () => {
       <img src='./images/logo.png' alt='logo'></img>
       </div>
       <div>
-        <SearchSong songsList = {songsList}  selectedSongs = {selectedSongs} onSelectSong = {onSelectSong} onRemoveSong={onRemoveSong} />
+        <SearchSong selectedSongs = {selectedSongs} onSelectSong = {onSelectSong} onRemoveSong={onRemoveSong} />
         <DisplayList selectedSongs={selectedSongs} onRemoveSong={onRemoveSong}/>
 
         <button className="valid-button" onClick={validate}>Validate</button>
@@ -48,8 +47,7 @@ const App = () => {
 }
 
 App.ProtoTypes = {
-  songsList: PropTypes.array.isRequired,
-  selectedSongs: PropTypes.array.isRequired,
+  selectedSongs: PropTypes.array.isRequired
 }
 
 export default App;
