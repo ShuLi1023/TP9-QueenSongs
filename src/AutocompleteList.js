@@ -15,7 +15,11 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
   if(userInput.length === 0 && !showSongs){
     return null
   }
-  return (showSongs  )  ?
+  return (autocompleteSongsList.length === 0 )  ?
+    <ul>
+      <li>No song with that name</li>
+    </ul>
+    :
     <ul className="options">
       { 
         autocompleteSongsList.map((song, index) => {
@@ -34,10 +38,6 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
           ) 
         })
       }
-    </ul>
-    :
-    <ul>
-      <li>No song with that name</li>
     </ul>
   }
 

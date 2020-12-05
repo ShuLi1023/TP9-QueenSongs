@@ -3,9 +3,9 @@ import AutocompleteList from "./AutocompleteList"
 import PropTypes from 'prop-types'
 import Axios from 'axios'
 
-const callApi = async (input, setSongs) => {
+const callApi = async (input) => {
   const response = await Axios.get(`http://localhost:8081/${input}`)
-  setSongs(response.data)
+  return response.data
 }
 
 
@@ -15,18 +15,24 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
   const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([])
   const [showSongs, setShowSongs] = React.useState(false)
   const [userInput, setUserInput] = React.useState("")
-
-  const setSongs = (songs) => {
-    console.log("Autocomplete songs list updated : " + songs.length)
-    setAutocompleteSongsList(songs)
-  }
+  const [shouldCallApi, setShouldCallApi] = React.useState(false)
 
   useEffect(() => {
-    if(userInput !== ""){
-      callApi(userInput, setSongs)
-      setShowSongs(true)
+    async function updateData(){
+        const songs = await callApi(userInput)
+        setAutocompleteSongsList(songs)
+        songs === 0 ?
+        setShowSongs(false) : 
+        setShowSongs(true)
+        console.log("Songs list updated " + songs.length)
     }
-  }, [userInput])
+
+    if(shouldCallApi && userInput !== ""){
+      setShouldCallApi(false)
+      updateData()
+    }
+
+  }, [userInput, shouldCallApi])
   
 
   const toggleSongSelected = (song) => {
@@ -43,14 +49,18 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
     
   }
 
-  const onChange = e => {
-    //const songSuggestions = songsList.filter( song => song.toLowerCase().includes(e.target.value.toLowerCase()) )
-    
+  const onChange = e => {    
+
     setUserInput(e.target.value)
+    console.log("User Input" + e.target.value)
+    if(e.target.value !== ""){
+      setShouldCallApi(true)
+    }else{
+      setShowSongs(false)
+    }
+    
     setActiveSong(0)
-    autocompleteSongsList.length === 0 ?
-      setShowSongs(false) : 
-      setShowSongs(true)
+    
   };
 
   const onKeyDown = e => {
