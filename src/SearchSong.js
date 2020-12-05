@@ -66,7 +66,9 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       break
 
       case 'ArrowUp':
-        setShowSongs(true)
+        if(userInput !== ""){
+          setShowSongs(true)
+        }
         if (activeSong === 0) {
           return;
         }
