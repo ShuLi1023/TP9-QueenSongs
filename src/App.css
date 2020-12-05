@@ -85,6 +85,10 @@ li{
   border: none;
 }
 
+.del-button:hover{
+  cursor: pointer;
+}
+
 .valid-button {
   background-color: #066e25; 
   border: none;
