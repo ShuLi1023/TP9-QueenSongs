@@ -35,7 +35,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
     }
 
 
-    if(shouldCallApi && userInput !== ""){
+    if(shouldCallApi && userInput.trim() !== ""){
       setShouldCallApi(false)
       updateData()
     }
