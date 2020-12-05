@@ -8,7 +8,7 @@ const callApi = async (input) => {
     const response = await Axios.get(`http://localhost:8081/${input}`)
     return response.data
   }catch(e){
-    return null
+    return "ERROR"
   }
 }
 
@@ -23,7 +23,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
   useEffect(() => {
     async function updateData(){
         const songs = await callApi(userInput)
-        if(songs === null){
+        if(songs === "ERROR"){
           alert("ERROR! API Not running!")
           setAutocompleteSongsList([])
         }else{
