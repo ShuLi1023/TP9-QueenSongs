@@ -6,7 +6,6 @@ import SearchSong from "./SearchSong"
 import PropTypes from 'prop-types'
 import Axios from 'axios'
 
-
 async function isApiRunning(){
   try{
     await Axios.get(`http://localhost:8081/test`)
@@ -14,7 +13,6 @@ async function isApiRunning(){
     alert("ERROR! API Not running!")
   }
 }
-
 
 const App = () => {
 

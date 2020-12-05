@@ -6,16 +6,13 @@ import Axios from 'axios'
 const callApi = async (input) => {
   try{
     const response = await Axios.get(`http://localhost:8081/${input}`)
-    return response
+    return response.data
   }catch(e){
-    console.log("ERROR: " + e)
-    return null
+    return "ERROR"
   }
 }
 
-
 const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
-  
 
   const [activeSong, setActiveSong] = React.useState(0)
   const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([])
@@ -26,9 +23,9 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
   useEffect(() => {
     async function updateData(){
         const songs = await callApi(userInput)
-
-        if(songs === null){
+        if(songs === "ERROR"){
           alert("ERROR! API Not running!")
+          setAutocompleteSongsList([])
         }else{
           setAutocompleteSongsList(songs)
           songs === 0 ?
@@ -37,7 +34,8 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
         }
     }
 
-    if(shouldCallApi && userInput !== ""){
+
+    if(shouldCallApi && userInput.trim() !== ""){
       setShouldCallApi(false)
       updateData()
     }
@@ -63,10 +61,9 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       setShouldCallApi(true)
     }else{
       setShowSongs(false)
-    }
-    
+    } 
     setActiveSong(0)
-  };
+  }
 
   const onKeyDown = e => {
     switch(e.key){
@@ -78,6 +75,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
       case 'ArrowUp':
         if(userInput !== ""){
           setShowSongs(true)
+        }
         if (activeSong === 0) {
           return;
         }
