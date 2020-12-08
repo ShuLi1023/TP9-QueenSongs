@@ -16,9 +16,7 @@ const AutocompleteList = ({userInput, showSongs, autocompleteSongsList, selected
     return null
   }
   return (autocompleteSongsList.length === 0 )  ?
-    <ul>
-      <li>No song with that name</li>
-    </ul>
+    <span>No song with that name</span>
     :
     <ul className="options">
       { 

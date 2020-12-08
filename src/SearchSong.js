@@ -28,9 +28,7 @@ const SearchSong = ({selectedSongs, onRemoveSong, onSelectSong}) => {
           setAutocompleteSongsList([])
         }else{
           setAutocompleteSongsList(songs)
-          songs === 0 ?
-          setShowSongs(false) : 
-          setShowSongs(true)
+          setShowSongs(songs !== 0)
         }
     }
 
