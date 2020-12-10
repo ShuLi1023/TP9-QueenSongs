@@ -1,11 +1,36 @@
 import React from "react";
 import "./App.css";
-import DisplayList from "./DisplaySelectedList";
-
-import SearchSong from "./SearchSong";
+import DisplayList from "./Components/DisplaySelectedList";
+import SearchSong from "./Components/SearchSong";
 import PropTypes from "prop-types";
 import Axios from "axios";
+import theme from "./theme";
+import { ThemeProvider } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: "100%",
+    minHeight: "10vh",
+    display: "flex",
+    justifyContent: "center",
+  },
+  item: {
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  paper: {
+    display: "flex",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(1),
+      width: theme.spacing(40),
+    },
+  },
+});
 async function isApiRunning() {
   try {
     await Axios.get(`http://localhost:8081/test`);
@@ -37,28 +62,36 @@ const App = () => {
       alert("Selected songs: " + selectedSongs);
     }
   };
-
+  const classes = useStyles();
   return (
-    <div className="App">
-      <div>
-        <img src="./images/logo.png" alt="logo" />
-      </div>
-      <div>
-        <SearchSong
-          selectedSongs={selectedSongs}
-          onSelectSong={onSelectSong}
-          onRemoveSong={onRemoveSong}
-        />
-        <DisplayList
-          selectedSongs={selectedSongs}
-          onRemoveSong={onRemoveSong}
-        />
+    <ThemeProvider theme={theme}>
+       <Grid container className={classes.root} alignItems="center">
+            <SearchSong
+              selectedSongs={selectedSongs}
+              onSelectSong={onSelectSong}
+              onRemoveSong={onRemoveSong}
+            />
+          </Grid>
+      <Grid container className={classes.root} alignItems="center">
 
-        <button className="valid-button" onClick={validate}>
-          Validate
-        </button>
-      </div>
-    </div>
+        <Grid item sm={2} />
+        <Grid className={classes.item} item sm>
+          <img src="./images/logo.png" alt="logo" />
+        </Grid>
+        <Grid container className={classes.item} item sm >
+          <Grid item className={classes.paper}>
+            <Paper elevation={3}>
+              <DisplayList
+                selectedSongs={selectedSongs}
+                onRemoveSong={onRemoveSong}
+                validate={validate}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid item sm={2} />
+      </Grid>
+    </ThemeProvider>
   );
 };
 

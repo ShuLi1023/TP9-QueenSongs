@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import AutocompleteList from "./AutocompleteList";
 import PropTypes from "prop-types";
 import Axios from "axios";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/core/styles";
 
 const callApi = async (input) => {
   try {
@@ -12,10 +14,18 @@ const callApi = async (input) => {
   }
 };
 
+const useStyles = makeStyles({
+  option: {
+    fontSize: 15,
+    "& > span": {
+      marginRight: 10,
+      fontSize: 18,
+    },
+  },
+});
 const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
   const [activeSong, setActiveSong] = React.useState(0);
   const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([]);
-  const [showSongs, setShowSongs] = React.useState(false);
   const [userInput, setUserInput] = React.useState("");
   const [shouldCallApi, setShouldCallApi] = React.useState(false);
 
@@ -27,7 +37,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
         setAutocompleteSongsList([]);
       } else {
         setAutocompleteSongsList(songs);
-        setShowSongs(songs !== 0);
       }
     }
 
@@ -45,7 +54,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
     }
 
     setAutocompleteSongsList([]);
-    setShowSongs(false);
     setUserInput("");
     setActiveSong(0);
   };
@@ -54,8 +62,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
     setUserInput(e.target.value);
     if (e.target.value !== "") {
       setShouldCallApi(true);
-    } else {
-      setShowSongs(false);
     }
     setActiveSong(0);
   };
@@ -68,9 +74,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
         break;
 
       case "ArrowUp":
-        if (userInput !== "") {
-          setShowSongs(true);
-        }
         if (activeSong === 0) {
           return;
         }
@@ -81,9 +84,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
         break;
 
       case "ArrowDown":
-        if (userInput !== "") {
-          setShowSongs(true);
-        }
         if (activeSong + 1 === autocompleteSongsList.length) {
           return;
         }
@@ -94,7 +94,6 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
         break;
 
       case "Escape":
-        setShowSongs(false);
         setActiveSong(0);
         break;
 
@@ -107,25 +106,39 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
       elmnt.scrollIntoView(Boolean);
     }
   };
-
+  const classes = useStyles();
   return (
-    <div className="autocomplete">
-      <input
-        type="text"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        value={userInput}
-        placeholder="Search songs"
-      />
-      <AutocompleteList
-        activeSong={activeSong}
-        autocompleteSongsList={autocompleteSongsList}
-        userInput={userInput}
-        showSongs={showSongs}
-        selectedSongs={selectedSongs}
-        toggleSongSelected={toggleSongSelected}
-      />
-    </div>
+    <Autocomplete
+      id="Search-songs"
+      style={{ width: 300 }}
+      options={autocompleteSongsList}
+      classes={{
+        option: classes.option,
+      }}
+      autoHighlight
+      renderOption={(option) => <React.Fragment>{option}</React.Fragment>}
+      inputValue={userInput}
+      onInputChange={(event, newInputValue) => {
+        setUserInput(newInputValue);
+      }}
+      onChange={(event, newValue) => {
+        if (newValue !== null) toggleSongSelected(newValue);
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          color="secondary"
+          label="Search songs"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          variant="outlined"
+          inputProps={{
+            ...params.inputProps,
+            autoComplete: "new-password",
+          }}
+        />
+      )}
+    />
   );
 };
 
