@@ -31,7 +31,7 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 		selectedSongs.length === 0 ? (
 			<Typography color="textSecondary">No song selected</Typography>
 		) : (
-			<List dense="true" className={classes.root}>
+			<List dense={true} className={classes.root}>
 				{selectedSongs.map((song, index) => (
 					<ListItem key={index}>
 						<ListItemText primary={song} />
