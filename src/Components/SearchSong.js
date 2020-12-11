@@ -7,9 +7,13 @@ import { TextField, makeStyles } from "@material-ui/core"
 const callApi = async (input) => {
 	try {
 		const response = await Axios.get(`http://localhost:8081/${input}`)
-		return response.data
+		if (response.status === 200) {
+			return response.data
+		} else {
+			return null
+		}
 	} catch (e) {
-		return "ERROR"
+		return null
 	}
 }
 
@@ -31,7 +35,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 	useEffect(() => {
 		async function updateData() {
 			const songs = await callApi(userInput)
-			if (songs === "ERROR") {
+			if (songs === null) {
 				alert("ERROR! API Not running!")
 				setAutocompleteSongsList([])
 			} else {

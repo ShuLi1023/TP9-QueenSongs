@@ -50,7 +50,7 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 				</Typography>
 				{displayList}
 			</CardContent>
-			<CardActions display="flex" alignItems="center">
+			<CardActions>
 				<Button
 					className={classes.btn}
 					variant="outlined"

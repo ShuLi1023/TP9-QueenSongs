@@ -59,6 +59,7 @@ const App = () => {
 		}
 	}
 	const classes = useStyles()
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Container className={classes.root}>
