@@ -48,7 +48,12 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 				{displayList}
 			</CardContent>
 			<CardActions>
-				<Button size="small" color="primary" onClick={() => validate()}>
+				<Button
+					variant="outlined"
+					size="small"
+					color="primary"
+					onClick={() => validate()}
+				>
 					Validate
 				</Button>
 			</CardActions>

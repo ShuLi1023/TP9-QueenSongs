@@ -116,6 +116,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 				option: classes.option,
 			}}
 			autoHighlight
+			noOptionsText="No Song With That Name"
 			renderOption={(option) => <React.Fragment>{option}</React.Fragment>}
 			inputValue={userInput}
 			onInputChange={(event, newInputValue) => {
