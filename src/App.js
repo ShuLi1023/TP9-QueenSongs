@@ -3,7 +3,6 @@ import "./App.css"
 import DisplayList from "./Components/DisplayList"
 import SearchSong from "./Components/SearchSong"
 import PropTypes from "prop-types"
-import Axios from "axios"
 import theme from "./theme"
 import {ThemeProvider, Grid, makeStyles, Paper } from "@material-ui/core"
 
@@ -29,16 +28,8 @@ const useStyles = makeStyles({
 		},
 	},
 })
-async function isApiRunning() {
-	try {
-		await Axios.get(`http://localhost:8081/test`)
-	} catch (e) {
-		alert("ERROR! API Not running!")
-	}
-}
 
 const App = () => {
-	isApiRunning()
 
 	const [selectedSongs, setSelectedSongs] = React.useState([])
 	const onSelectSong = (song) => {
