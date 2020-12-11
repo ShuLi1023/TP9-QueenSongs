@@ -1,29 +1,28 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 body {
-  font-family: sans-serif;
+	font-family: sans-serif;
 }
 
-.option-selected{
-  background-color: rgb(6, 110, 37);
-  color: #f6fbfc;
-  cursor: pointer;
-  font-weight: 700;
-
+.option-selected {
+	background-color: rgb(6, 110, 37);
+	color: #f6fbfc;
+	cursor: pointer;
+	font-weight: 700;
 }
 
 .options li:not(:last-of-type) {
-  border-bottom: 1px solid #999;
+	border-bottom: 1px solid #999;
 }
 .display li {
-  list-style: none;
-  padding: 0.5rem;
+	list-style: none;
+	padding: 0.5rem;
 }
 
-li{
-  list-style: none;
-  color: rgb(172, 7, 7);
-  font-size: 18px;
+li {
+	list-style: none;
+	color: rgb(172, 7, 7);
+	font-size: 18px;
 }

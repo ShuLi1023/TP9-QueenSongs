@@ -20,6 +20,9 @@ const useStyles = makeStyles(() => ({
 		maxWidth: 360,
 		margin: "auto",
 	},
+	btn: {
+		margin: "auto",
+	},
 }))
 
 const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
@@ -47,8 +50,9 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 				</Typography>
 				{displayList}
 			</CardContent>
-			<CardActions>
+			<CardActions display="flex" alignItems="center">
 				<Button
+					className={classes.btn}
 					variant="outlined"
 					size="small"
 					color="primary"
