@@ -133,7 +133,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 				<TextField
 					{...params}
 					color="secondary"
-					label="Search songs"
+					label="Search Songs"
 					onChange={onChange}
 					onKeyDown={onKeyDown}
 					variant="outlined"
