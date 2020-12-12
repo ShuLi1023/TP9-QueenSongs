@@ -35,22 +35,33 @@ test("Check if selected song is rendered", () => {
 	expect(listItem2).toBeInTheDocument()
 })
 
-test("Check if selected song is deleted", () => {
+test("Check  delete button", () => {
+	const mockOnRemove = jest.fn()
 	const componentRendered = render(
 		<DisplayList
 			selectedSongs={["A Kind of Magic"]}
-			onRemoveSong={jest.fn()}
+			onRemoveSong={mockOnRemove}
 			validate={jest.fn()}
 		/>
 	)
 	const deleteButton = componentRendered.getByLabelText("delete")
+	fireEvent.click(deleteButton)
 	
-	fireEvent.change(deleteButton, {removeSong: "A Kind of Magic"})
-	deleteButton.click()
-	
-	const noSelected = componentRendered.getByTitle("no select")
+	expect(mockOnRemove).toHaveBeenCalledTimes(1)
+	expect(mockOnRemove).toHaveBeenCalledWith("A Kind of Magic")
+})
 
-	expect(noSelected).toHaveTextContent(/^No song selected$/)
-	expect(deleteButton).toHaveBeenCalledTimes(1)
-	expect(deleteButton).toHaveBeenCalledWith("A Kind of Magic")
+test("Check validate button", () => {
+	const mockValidate = jest.fn()
+	const componentRendered = render(
+		<DisplayList
+			selectedSongs={["A Kind of Magic"]}
+			onRemoveSong={jest.fn()}
+			validate={mockValidate}
+		/>
+	)
+	const validateButton = componentRendered.getByText("Validate")
+	fireEvent.click(validateButton)
+	
+	expect(mockValidate).toHaveBeenCalledTimes(1)
 })

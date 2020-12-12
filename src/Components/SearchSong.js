@@ -122,14 +122,13 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 			autoHighlight
 			noOptionsText="No Song With That Name"
 			renderOption={(option) => <React.Fragment>{option}</React.Fragment>}
-			inputValue={userInput}
 			onInputChange={(event, newInputValue) => {
 				setUserInput(newInputValue)
 			}}
 			onChange={(event, newValue) => {
 				if (newValue !== null) toggleSongSelected(newValue)
 			}}
-			value={userInput}
+			inputValue={userInput}
 			renderInput={(params) => (
 				<TextField
 					{...params}
