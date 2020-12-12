@@ -71,11 +71,13 @@ test("Check correct Song Name generated for given input", async () => {
 	expect(axiosMock.get).toHaveBeenCalledWith("http://localhost:8081/dozen")
 })
 
-/*
-test("Check correct Song Name generated for given input", async () => {
-	callAPI: jest.fn().mockResolvedValue({})
+test("Check 'No Song With Name' msg for invalid song name", async () => {
+	axiosMock.get.mockResolvedValueOnce({
+		data: [],
+		status: 200,
+	})
 
-	const wrapper = shallow(
+	const { getByLabelText, getByText } = render(
 		<SearchSong
 			selectedSongs={[]}
 			onSelectSong={jest.fn()}
@@ -83,20 +85,15 @@ test("Check correct Song Name generated for given input", async () => {
 		/>
 	)
 
-	wrapper.instance().callApi = jest.fn.mockResolvedValue({
-		status: 200,
-		data: "A Dozen Red Roses For My Darling",
+	const autocomplete = getByLabelText("Search Songs")
+	expect(autocomplete).toBeInTheDocument()
+
+	act(() => {
+		fireEvent.change(autocomplete, { target: { value: "12345" } })
 	})
+	const msg = await waitFor(() => getByText("No Song With That Name"))
 
-	const instance = wrapper.instance()
-
-	const autocomplete = instance.getByLabelText("Search Songs")
-
-	fireEvent.change(autocomplete, { target: { value: "dozen" } })
-
-	const element = componentRendered.getByText(
-		"A Dozen Red Roses For My Darling"
-	)
-	expect(element).toBeInTheDocument()
+	expect(msg).toBeInTheDocument()
+	expect(axiosMock.get).toHaveBeenCalledTimes(1)
+	expect(axiosMock.get).toHaveBeenCalledWith("http://localhost:8081/12345")
 })
-*/
