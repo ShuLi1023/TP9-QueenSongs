@@ -31,6 +31,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 	const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([])
 	const [userInput, setUserInput] = React.useState("")
 	const [shouldCallApi, setShouldCallApi] = React.useState(false)
+	const [value, setValue] = React.useState(null);
 
 	useEffect(() => {
 		async function updateData() {
@@ -114,6 +115,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 	return (
 		<Autocomplete
 			id="Search-songs"
+			value={value}
 			style={{ width: 300 }}
 			options={autocompleteSongsList}
 			classes={{
@@ -127,6 +129,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 			}}
 			onChange={(event, newValue) => {
 				if (newValue !== null) toggleSongSelected(newValue)
+				setValue(null);
 			}}
 			inputValue={userInput}
 			renderInput={(params) => (
