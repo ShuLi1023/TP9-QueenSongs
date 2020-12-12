@@ -48,7 +48,7 @@ test("Check correct Song Name generated for given input", async () => {
 	const songSuggestion = await waitFor(() =>
 		getByText("A Dozen Red Roses For My Darling")
 	)
-	//console.log("received: \n" + songSuggestion + "\n\n")
+
 	expect(songSuggestion).toBeInTheDocument()
 	expect(axiosMock.get).toHaveBeenCalledTimes(1)
 	expect(axiosMock.get).toHaveBeenCalledWith("http://localhost:8081/dozen")
@@ -131,32 +131,4 @@ test("Check unselect a song", async () => {
 	expect(mockUnSelectSong).toHaveBeenCalledTimes(1)
 	expect(mockUnSelectSong).toHaveBeenCalledWith("A Dozen Red Roses For My Darling")
 })
-/*
-test("API not running", async () => {
-	axiosMock.get.mockResolvedValueOnce({
-		data: [],
-		status: 400,
-	})
-	global.alert = jest.fn()
 
-	const { getByLabelText } = render(
-		<SearchSong
-			selectedSongs={[]}
-			onSelectSong={jest.fn()}
-			onRemoveSong={jest.fn()}
-		/>
-	)
-
-	const autocomplete = getByLabelText("Search Songs")
-
-	act(() => {
-		fireEvent.change(autocomplete, { target: { value: "dozen" } })
-	})
-
-	expect(global.alert).toHaveBeenCalledTimes(1)
-
-	expect(axiosMock.get).toHaveBeenCalledTimes(1)
-	expect(axiosMock.get).toHaveBeenCalledWith("http://localhost:8081/dozen")
-	//expect().toHaveBeenCalledTimes(1)
-})
-*/
