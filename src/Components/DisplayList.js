@@ -29,13 +29,19 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 	const classes = useStyles()
 	const displayList =
 		selectedSongs.length === 0 ? (
-			<Typography color="textSecondary" title="no select">No song selected</Typography>
+			<Typography color="textSecondary" title="no select">
+				No song selected
+			</Typography>
 		) : (
 			<List dense={true} className={classes.root}>
 				{selectedSongs.map((song, index) => (
 					<ListItem key={index}>
 						<ListItemText primary={song} />
-						<IconButton label="delete" aria-label="delete" onClick={() => onRemoveSong(song)}>
+						<IconButton
+							label="delete"
+							aria-label="delete"
+							onClick={() => onRemoveSong(song)}
+						>
 							<DeleteIcon />
 						</IconButton>
 					</ListItem>
