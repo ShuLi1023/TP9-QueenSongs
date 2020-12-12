@@ -34,3 +34,23 @@ test("Check if selected song is rendered", () => {
 	expect(listItem1).toBeInTheDocument()
 	expect(listItem2).toBeInTheDocument()
 })
+
+test("Check if selected song is deleted", () => {
+	const componentRendered = render(
+		<DisplayList
+			selectedSongs={["A Kind of Magic"]}
+			onRemoveSong={jest.fn()}
+			validate={jest.fn()}
+		/>
+	)
+	const deleteButton = componentRendered.getByLabelText("delete")
+	
+	fireEvent.change(deleteButton, {removeSong: "A Kind of Magic"})
+	deleteButton.click()
+	
+	const noSelected = componentRendered.getByTitle("no select")
+
+	expect(noSelected).toHaveTextContent(/^No song selected$/)
+	expect(deleteButton).toHaveBeenCalledTimes(1)
+	expect(deleteButton).toHaveBeenCalledWith("A Kind of Magic")
+})
