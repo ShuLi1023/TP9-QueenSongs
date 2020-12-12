@@ -129,6 +129,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 			onChange={(event, newValue) => {
 				if (newValue !== null) toggleSongSelected(newValue)
 			}}
+			value={userInput}
 			renderInput={(params) => (
 				<TextField
 					{...params}
