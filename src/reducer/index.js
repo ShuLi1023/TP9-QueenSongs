@@ -1,20 +1,9 @@
-import {allSongs} from '../songs'
+import { combineReducers } from 'redux'
 
-export const songReducer = (state = [], action) => {
-	switch (action.type) {
+import songReducer from './songsReducer'
+import inputReducer from './inputReducer'
 
-        case GET_ALL_SONGS:
-            return{
-                allSongs
-            }
-
-		case REMOVE_SONG:
-			const list = state
-			return {
-				list.filter( (s) => s !== action.payload )
-			}
-
-		default:
-			return state
-	}
-}
+export default allReducers = combineReducers({
+	selectedSongs: songReducer,
+	userInput: inputReducer,
+})
