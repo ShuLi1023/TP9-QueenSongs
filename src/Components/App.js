@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import DisplayList from './DisplayList'
 import SearchSong from './SearchSong'
 import PropTypes from 'prop-types'

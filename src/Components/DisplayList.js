@@ -51,7 +51,7 @@ const DisplayList = ({ selectedSongs, onRemoveSong, validate }) => {
 	return (
 		<Card>
 			<CardContent>
-				<Typography variant="h5" component="h2">
+				<Typography variant="h5" component="h2" color="secondary">
 					Selected songs
 				</Typography>
 				{displayList}
