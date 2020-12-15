@@ -1,36 +1,36 @@
-import React from "react"
-import "./App.css"
-import DisplayList from "./Components/DisplayList"
-import SearchSong from "./Components/SearchSong"
-import PropTypes from "prop-types"
-import theme from "./theme"
+import React from 'react'
+import './App.css'
+import DisplayList from './DisplayList'
+import SearchSong from './SearchSong'
+import PropTypes from 'prop-types'
+import theme from '../theme'
 import {
 	ThemeProvider,
 	Grid,
 	makeStyles,
 	Paper,
 	Container,
-} from "@material-ui/core"
+} from '@material-ui/core'
 
 const useStyles = makeStyles({
 	root: {
-		padding: "5%",
+		padding: '5%',
 	},
 	container: {
-		minWidth: "100%",
-		minHeight: "10vh",
-		display: "flex",
-		justifyContent: "center",
+		minWidth: '100%',
+		minHeight: '10vh',
+		display: 'flex',
+		justifyContent: 'center',
 	},
 	item: {
-		flexDirection: "column",
-		alignItems: "center",
-		textAlign: "center",
+		flexDirection: 'column',
+		alignItems: 'center',
+		textAlign: 'center',
 	},
 	paper: {
-		display: "flex",
-		flexWrap: "wrap",
-		"& > *": {
+		display: 'flex',
+		flexWrap: 'wrap',
+		'& > *': {
 			margin: theme.spacing(1),
 			width: theme.spacing(40),
 		},
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 const App = () => {
 	const [selectedSongs, setSelectedSongs] = React.useState([])
 	const onSelectSong = (song) => {
-		if (song !== "" && selectedSongs.indexOf(song) === -1) {
+		if (song !== '' && selectedSongs.indexOf(song) === -1) {
 			const selectedSongsList = [...selectedSongs, song]
 			setSelectedSongs(selectedSongsList)
 		}
@@ -53,9 +53,9 @@ const App = () => {
 
 	const validate = () => {
 		if (selectedSongs.length === 0) {
-			alert("No Songs Selected!")
+			alert('No Songs Selected!')
 		} else {
-			alert("Selected songs: " + selectedSongs)
+			alert('Selected songs: ' + selectedSongs)
 		}
 	}
 	const classes = useStyles()

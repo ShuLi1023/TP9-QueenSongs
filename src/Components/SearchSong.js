@@ -1,8 +1,11 @@
-import React, { useEffect } from "react"
-import PropTypes from "prop-types"
-import Axios from "axios"
-import Autocomplete from "@material-ui/lab/Autocomplete"
-import { TextField, makeStyles } from "@material-ui/core"
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import Axios from 'axios'
+import { connect } from 'react-redux'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import { TextField, makeStyles } from '@material-ui/core'
+
+import { removeSong } from '../actions'
 
 const callApi = async (input) => {
 	try {
@@ -20,7 +23,7 @@ const callApi = async (input) => {
 const useStyles = makeStyles({
 	option: {
 		fontSize: 15,
-		"& > span": {
+		'& > span': {
 			marginRight: 10,
 			fontSize: 18,
 		},
@@ -29,22 +32,22 @@ const useStyles = makeStyles({
 const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 	const [activeSong, setActiveSong] = React.useState(0)
 	const [autocompleteSongsList, setAutocompleteSongsList] = React.useState([])
-	const [userInput, setUserInput] = React.useState("")
+	const [userInput, setUserInput] = React.useState('')
 	const [shouldCallApi, setShouldCallApi] = React.useState(false)
-	const [value, setValue] = React.useState(null);
+	const [value, setValue] = React.useState(null)
 
 	useEffect(() => {
 		async function updateData() {
 			const songs = await callApi(userInput)
 			if (songs === null) {
-				alert("ERROR! API Not running!")
+				alert('ERROR! API Not running!')
 				setAutocompleteSongsList([])
 			} else {
 				setAutocompleteSongsList(songs)
 			}
 		}
 
-		if (shouldCallApi && userInput.trim() !== "") {
+		if (shouldCallApi && userInput.trim() !== '') {
 			setShouldCallApi(false)
 			updateData()
 		}
@@ -58,13 +61,13 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 		}
 
 		setAutocompleteSongsList([])
-		setUserInput("")
+		setUserInput('')
 		setActiveSong(0)
 	}
 
 	const onChange = (e) => {
 		setUserInput(e.target.value)
-		if (e.target.value !== "") {
+		if (e.target.value !== '') {
 			setShouldCallApi(true)
 		}
 		setActiveSong(0)
@@ -72,12 +75,12 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 
 	const onKeyDown = (e) => {
 		switch (e.key) {
-			case "Enter":
+			case 'Enter':
 				if (autocompleteSongsList[activeSong])
 					toggleSongSelected(autocompleteSongsList[activeSong])
 				break
 
-			case "ArrowUp":
+			case 'ArrowUp':
 				if (activeSong === 0) {
 					return
 				}
@@ -87,7 +90,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 				}
 				break
 
-			case "ArrowDown":
+			case 'ArrowDown':
 				if (activeSong + 1 === autocompleteSongsList.length) {
 					return
 				}
@@ -97,7 +100,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 				}
 				break
 
-			case "Escape":
+			case 'Escape':
 				setActiveSong(0)
 				break
 
@@ -105,7 +108,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 		}
 	}
 	const onScroll = (Boolean) => {
-		const elmnt = document.getElementById("active")
+		const elmnt = document.getElementById('active')
 		if (elmnt !== null) {
 			elmnt.scrollIntoView(Boolean)
 		}
@@ -129,7 +132,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 			}}
 			onChange={(event, newValue) => {
 				if (newValue !== null) toggleSongSelected(newValue)
-				setValue(null);
+				setValue(null)
 			}}
 			inputValue={userInput}
 			renderInput={(params) => (
@@ -142,7 +145,7 @@ const SearchSong = ({ selectedSongs, onRemoveSong, onSelectSong }) => {
 					variant="outlined"
 					inputProps={{
 						...params.inputProps,
-						autoComplete: "new-password",
+						autoComplete: 'new-password',
 					}}
 				/>
 			)}
@@ -156,4 +159,12 @@ SearchSong.propTypes = {
 	onSelectSong: PropTypes.func.isRequired,
 }
 
-export default SearchSong
+const mapStateToProps = (state) => ({
+	selectedSongs: state.selectedSongs,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	removeSong: (song) => dispatch(removeSong(song)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchSong)
