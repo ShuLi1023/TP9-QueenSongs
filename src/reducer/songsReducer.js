@@ -1,10 +1,8 @@
-import {onSelectSong} from '../helpers'
-import {onRemoveSong} from '../helpers'
-import { allSongs } from '../songs'
+import { onSelectSong, onRemoveSong } from '../helpers'
+
 const defaultState = {
-	allSongs : allSongs,
 	selectedSongs: [],
-	value: null
+	value: null,
 }
 const songsReducer = (state = defaultState, action) => {
 	switch (action.type) {
@@ -16,9 +14,9 @@ const songsReducer = (state = defaultState, action) => {
 		case 'REMOVE_SONG':
 			return {
 				...state,
-				selectedSongs: onRemoveSong(action.payload, state.selectedSongs)
+				selectedSongs: onRemoveSong(action.payload, state.selectedSongs),
 			}
-		
+
 		default:
 			return state
 	}
