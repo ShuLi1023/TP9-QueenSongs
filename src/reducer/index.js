@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-
-import songReducer from './songsReducer'
+import songsReducer from './songsReducer'
 import inputReducer from './inputReducer'
 
- const allReducers = combineReducers({
-	selectedSongs: songReducer,
+const allReducers = combineReducers({
+	songs: songsReducer,
 	userInput: inputReducer,
 })
-export default allReducers;
+
+export default allReducers

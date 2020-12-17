@@ -37,26 +37,7 @@ const useStyles = makeStyles({
 })
 
 const App = () => {
-	const [selectedSongs, setSelectedSongs] = React.useState([])
-	const onSelectSong = (song) => {
-		if (song !== '' && selectedSongs.indexOf(song) === -1) {
-			const selectedSongsList = [...selectedSongs, song]
-			setSelectedSongs(selectedSongsList)
-		}
-	}
 
-	const onRemoveSong = (removeSong) => {
-		const newList = selectedSongs.filter((s) => s !== removeSong)
-		setSelectedSongs(newList)
-	}
-
-	const validate = () => {
-		if (selectedSongs.length === 0) {
-			alert('No Songs Selected!')
-		} else {
-			alert('Selected songs: ' + selectedSongs)
-		}
-	}
 	const classes = useStyles()
 
 	return (
@@ -64,9 +45,9 @@ const App = () => {
 			<Container className={classes.root}>
 				<Grid container className={classes.container} alignItems="center">
 					<SearchSong
-						selectedSongs={selectedSongs}
-						onSelectSong={onSelectSong}
-						onRemoveSong={onRemoveSong}
+						//selectedSongs={selectedSongs}
+						//onSelectSong={onSelectSong}
+						//onRemoveSong={onRemoveSong}
 					/>
 				</Grid>
 				<Grid container className={classes.container} alignItems="center">
@@ -78,9 +59,9 @@ const App = () => {
 						<Grid item className={classes.paper}>
 							<Paper elevation={3}>
 								<DisplayList
-									selectedSongs={selectedSongs}
-									onRemoveSong={onRemoveSong}
-									validate={validate}
+									//selectedSongs={selectedSongs}
+									//onRemoveSong={onRemoveSong}
+									//validate={validate}
 								/>
 							</Paper>
 						</Grid>
