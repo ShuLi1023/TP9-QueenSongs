@@ -24,16 +24,12 @@ export const songsReducer = (state = defaultState, action) => {
 				...state,
 				selectedSongs: onRemoveSong(action.payload, state.selectedSongs),
 			}
-
 		default:
 			return state
 	}
 }
 
 export const getSongs = () => async (dispatch, getState) => {
-	console.log('Calling API')
 	const response = await Axios.get('http://localhost:8081/songs')
-	console.log('\nData received: ')
-	console.log(response.data)
 	dispatch(setSongsActionCreator(response.data))
 }

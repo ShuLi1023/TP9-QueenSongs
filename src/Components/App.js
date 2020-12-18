@@ -44,11 +44,7 @@ const App = () => {
 		<ThemeProvider theme={theme}>
 			<Container className={classes.root}>
 				<Grid container className={classes.container} alignItems="center">
-					<SearchSong
-						//selectedSongs={selectedSongs}
-						//onSelectSong={onSelectSong}
-						//onRemoveSong={onRemoveSong}
-					/>
+					<SearchSong />
 				</Grid>
 				<Grid container className={classes.container} alignItems="center">
 					<Grid item sm={2} />
@@ -58,11 +54,7 @@ const App = () => {
 					<Grid container className={classes.item} item sm>
 						<Grid item className={classes.paper}>
 							<Paper elevation={3}>
-								<DisplayList
-									//selectedSongs={selectedSongs}
-									//onRemoveSong={onRemoveSong}
-									//validate={validate}
-								/>
+								<DisplayList />
 							</Paper>
 						</Grid>
 					</Grid>
