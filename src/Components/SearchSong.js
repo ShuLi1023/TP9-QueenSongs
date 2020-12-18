@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { TextField, makeStyles } from '@material-ui/core'
-import { allSongs } from '../songs'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
+import { getSongs } from '../reducer/songsReducer'
+
 import {
 	setUserInputActionCreator,
 	setSelectedSongsActionCreator,
@@ -19,15 +20,25 @@ const useStyles = makeStyles({
 		},
 	},
 })
-const SearchSong = ({ onSelectSong, userInput, inputValue, value }) => {
+
+const SearchSong = ({
+	onSelectSong,
+	userInput,
+	inputValue,
+	value,
+	songsList,
+}) => {
 	const classes = useStyles()
+
+	const dispatch = useDispatch()
+	dispatch(getSongs())
 
 	return (
 		<Autocomplete
 			id="Search-songs"
 			value={value}
 			style={{ width: 300 }}
-			options={allSongs}
+			options={songsList}
 			classes={{
 				option: classes.option,
 			}}
@@ -61,7 +72,7 @@ const SearchSong = ({ onSelectSong, userInput, inputValue, value }) => {
 }
 
 SearchSong.propTypes = {
-	allSongs: PropTypes.array.isRequired,
+	songsList: PropTypes.array.isRequired,
 	selectedSongs: PropTypes.array.isRequired,
 	onSelectSong: PropTypes.func.isRequired,
 	inputValue: PropTypes.string.isRequired,
@@ -70,6 +81,7 @@ const mapStateToProps = (state) => ({
 	selectedSongs: state.songs.selectedSongs,
 	inputValue: state.userInput,
 	value: state.songs.value,
+	songsList: state.songs.songsList,
 })
 
 const mapDispatchToProps = (dispatch) => ({

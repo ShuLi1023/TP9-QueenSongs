@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import songsReducer from './songsReducer'
+import { songsReducer } from './songsReducer'
 import inputReducer from './inputReducer'
 
 const allReducers = combineReducers({

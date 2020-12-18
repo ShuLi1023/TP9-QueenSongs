@@ -1,11 +1,19 @@
 import { onSelectSong, onRemoveSong } from '../helpers'
+import { setSongsActionCreator } from '../actions'
+import Axios from 'axios'
 
 const defaultState = {
+	songsList: [],
 	selectedSongs: [],
 	value: null,
 }
-const songsReducer = (state = defaultState, action) => {
+export const songsReducer = (state = defaultState, action) => {
 	switch (action.type) {
+		case 'SET_SONGS':
+			return {
+				...state,
+				songsList: action.payload,
+			}
 		case 'SET_SELECTED_SONGS':
 			return {
 				...state,
@@ -22,4 +30,10 @@ const songsReducer = (state = defaultState, action) => {
 	}
 }
 
-export default songsReducer
+export const getSongs = () => async (dispatch, getState) => {
+	console.log('Calling API')
+	const response = await Axios.get('http://localhost:8081/songs')
+	console.log('\nData received: ')
+	console.log(response.data)
+	dispatch(setSongsActionCreator(response.data))
+}
